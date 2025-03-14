@@ -1,156 +1,209 @@
-
-<html>
-<head> 
-     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+ 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>王者荣耀重复名生成</title>
-      <style>
-        /*  *{background:#FF3D58;color:#FFDDAC}*/
-          h1{
-           box-shadow: 2px 2px 2px #909090;width:104%;
-margin:0px 0px 30px -7px;}
-           .button
-            {
-        border-radius:11px;
-        border:1.5px solid #636363;
-        display:inline-block;
-        padding:1px 5px 1px 5px;
-        font-size:17px;
-            }
-            input[type=text]{
-        border-radius:11px;
-        border:1.5px solid #636363;
-        display:inline-block;
-        height:24px;
-        font-size:17px;
-        width:170px;
-            }
-            .toast{
-                display:none;
-                position:fixed;
-                top:70%;
-                left:50%;
-                transform:translate(-50%, -50%);
-                background:#A7A7A7;
-                padding:17px 17px 17px 17px;
-                border-radius:20px;
-                color:white;
-                }
-           </style>
+    <title>王者荣耀重复名生成</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* 标题样式 */
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ff4757;
+            margin: 20px 0;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 输入组样式 */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .input-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .input-group input[type="text"]:focus {
+            border-color: #ff4757;
+            outline: none;
+            background-color: #fff;
+        }
+
+        /* 按钮样式 */
+        .button {
+            display: inline-block;
+            width: 48%;
+            padding: 12px;
+            background: #ff4757;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #ff6b81;
+        }
+
+        /* 单选按钮组样式 */
+        .radio-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .radio-group label {
+            margin-right: 15px;
+            font-weight: 400;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #777;
+            padding: 0 15px;
+        }
+
+        .footer a {
+            color: #ff4757;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ff6b81;
+        }
+
+        /* 提示信息样式 */
+        .toast {
+            display: none;
+            position: fixed;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-<h1>游戏重复名生成</h1>
-<div align=center>
-输入名字：<input id=name type=text>&nbsp;&nbsp;<div onclick=s() class=button>生成</div><br>
-生成结果：<input id=result type=text>&nbsp;&nbsp;<div onclick=copy() class=button>复制</div>
-<br>
-<label><input type=radio name=system id=android checked=checked>安卓</label>
-<label><input type=radio name=system id=iOS>苹果</label>
-</div>
-<br>
-<br>
-<div align=center style=background:/*#FF3D58;*/f9f9f9;width:100%;position:fixed;right:0px;bottom:0px;>
-<strong>使用方法:</strong>&nbsp;输入昵称点击生成，然后点击复制，再到游戏里面粘贴修改游戏名称即可
-<br>
-<strong>另外说明:</strong>&nbsp;
-如遇到仍然重复，可再次点击生成按钮<br>名字的字数越少越不易重复<br>不输入直接生成即为空白名
-<br>
-<hr/>
-<p>获取更多：<a href="https://211611411.github.io" target="_blank" style="color:black;">轩哥软件合集</a></p>
-</div>
-<div class=toast id=toast></div>
-<script>
-function dom(x){
-return document.getElementById(x)
-}
-function r(minNum,maxNum){ 
-    switch(arguments.length){ 
-        case 1: 
-            return parseInt(Math.random()*minNum+1,10); 
-        break; 
-        case 2: 
-            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
-        break; 
-            default: 
-                return 0; 
-            break; 
-    } 
-} 
-var timeout;
-function toast(str)
-{
-    clearTimeout(timeout)
-    dom("toast").style.display="block"
-    dom("toast").innerHTML=str
-    timeout=setTimeout('dom("toast").style.display="none"',1500)
-}
+    <h1>游戏重复名生成</h1>
+    <div class="container">
+        <div class="input-group">
+            <label for="name">输入名字：</label>
+            <input id="name" type="text" placeholder="请输入昵称">
+        </div>
+        <div class="input-group">
+            <label for="result">生成结果：</label>
+            <input id="result" type="text" readonly>
+        </div>
+        <div class="radio-group">
+            <label><input type="radio" name="system" id="android" checked>安卓</label>
+            <label><input type="radio" name="system" id="iOS">苹果</label>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <button onclick="s()" class="button">生成</button>
+            <button onclick="copy()" class="button">复制</button>
+        </div>
+    </div>
+    <div class="footer">
+        <strong>使用方法:</strong> 输入昵称点击生成，然后点击复制，再到游戏里面粘贴修改游戏名称即可<br>
+        <strong>另外说明:</strong> 如遇到仍然重复，可再次点击生成按钮。名字的字数越少越不易重复。<br>
+        <p>获取更多：<a href="#" target="_blank">轩哥软件合集</a></p>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        function dom(x) {
+            return document.getElementById(x);
+        }
 
-function s()
-{
-if(dom("android").checked){
-var i=1
-var blank="%E2%81%A"
-var n=[...dom("name").value]
-if(dom("name").value=="")
-{n=[""]}
-if(n.length>=6)
-{alert("名字的字数超限制，可能无法使用，请减小至6字符以下")
-}
-else
-{
-i=6-n.length
-}
-var m=0
-while(m<i)
-{m++
-var rr=r(0,15)
-if(rr==1)
-{rr=0}
-n[r(0,n.length-1)]+=blank+rr.toString(16)
-console.log(n)
-}
-if(m==i)
-{
-dom("result").value=decodeURI(n.join(""))
-toast("已生成重复名，点击复制可使用")
-}
-}else{
-var i=1
-var blank=["%E2%81%A0","%7F","%E2%81%A3","%E2%81%A2"]
-var n=[...dom("name").value]
-if(dom("name").value=="")
-{n=[""]}
-if(n.length>=6)
-{alert("名字字数超限制，可能无法使用，请减小至6字符以下")
-}
-else
-{
-i=6-n.length
-}
-var m=0
-while(m<i)
-{m++
-var rr=r(0,3)
-n[r(0,n.length-1)]+=blank[rr]
-console.log(n)
-}
-if(m==i)
-{
-dom("result").value=decodeURI(n.join(""))
-toast("已生成重复名，点击复制可使用")
-}
-}
-}
-function copy()
-{
-var fz=dom("result");
-fz.select();
-document.execCommand("Copy");
-    toast("复制成功！")
+        function r(minNum, maxNum) {
+            return Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+        }
 
-}
-</script>
+        var timeout;
+        function toast(str) {
+            clearTimeout(timeout);
+            dom("toast").style.display = "block";
+            dom("toast").textContent = str;
+            timeout = setTimeout(() => { dom("toast").style.display = "none"; }, 1500);
+        }
+
+        function s() {
+            const isAndroid = dom("android").checked;
+            const blank = isAndroid ? "%E2%81%A" : ["%E2%81%A0", "%7F", "%E2%81%A3", "%E2%81%A2"];
+            let n = [...dom("name").value];
+            if (dom("name").value === "") n = [""];
+            if (n.length >= 6) {
+                alert("名字的字数超限制，可能无法使用，请减小至6字符以下");
+                return;
+            }
+            const i = 6 - n.length;
+            for (let m = 0; m < i; m++) {
+                const rr = isAndroid ? r(0, 15) : r(0, 3);
+                n[r(0, n.length - 1)] += isAndroid ? `${blank}${rr.toString(16)}` : blank[rr];
+            }
+            dom("result").value = decodeURI(n.join(""));
+            toast("已生成重复名，点击复制可使用");
+        }
+
+        function copy() {
+            const fz = dom("result");
+            fz.select();
+            document.execCommand("Copy");
+            toast("复制成功！");
+        }
+    </script>
 </body>
 </html>
+ 
